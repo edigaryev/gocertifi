@@ -21,11 +21,6 @@ jobs:
     - name: Run go generate
       run: go generate
 
-    - name: Commit files
-      run: |
-        tag=$(date +%Y.%m.%d)
-        git config --local user.email "actions@github.com"
-        git config --local user.name "GitHub Actions"
-        git add certifi.go
-        git commit -m "Update $tag"
-        git push
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Update $(date +%Y.%m.%d)"
