@@ -15,12 +15,15 @@ jobs:
         go-version: '1.16'
 
     - uses: actions/checkout@v2
-      with:
-        ref: test-update
 
     - name: Run go generate
       run: go generate
 
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y.%m.%d')"
+
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: "Update $(date +%Y.%m.%d)"
+        commit_message: "Update ${{ steps.date.outputs.date }}"
+        tagging_message: "${{ steps.date.outputs.date }}"
